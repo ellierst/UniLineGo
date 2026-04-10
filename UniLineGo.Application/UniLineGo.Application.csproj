@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniLineGo.Domain\UniLineGo.Domain.csproj" />
+    <ProjectReference Include="..\UniLineGo.Infrastructure\UniLineGo.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
