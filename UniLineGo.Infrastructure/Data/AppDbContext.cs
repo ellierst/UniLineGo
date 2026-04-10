@@ -1,6 +1,7 @@
+namespace UniLineGo.Infrastructure.Data;
+
 using Microsoft.EntityFrameworkCore;
 using UniLineGo.Domain.Entities;
-
 public class AppDbContext : DbContext
 {
     public DbSet<TaskItem> Tasks { get; set; }

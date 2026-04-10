@@ -1,7 +1,9 @@
 namespace UniLineGo.Infrastructure.Repositories;
 
+using UniLineGo.Domain.Entities;
 using UniLineGo.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using UniLineGo.Infrastructure.Data;
 
 public class ReminderRepository : IReminderRepository
 {

@@ -1,4 +1,4 @@
-using UniLineGo.Domain.Entities;
+namespace UniLineGo.Domain.Entities;
 
 public class Reminder
 {

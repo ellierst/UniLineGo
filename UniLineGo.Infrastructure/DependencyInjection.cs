@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UniLineGo.Domain.Interfaces;
 using UniLineGo.Infrastructure.Repositories;
+using UniLineGo.Infrastructure.Data;  
 
 public static class DependencyInjection
 {

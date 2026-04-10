@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UniLineGo.Domain\UniLineGo.Domain.csproj" />
-    <ProjectReference Include="..\UniLineGo.Infrastructure\UniLineGo.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
