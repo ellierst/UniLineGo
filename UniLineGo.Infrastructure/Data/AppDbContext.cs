@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using UniLineGo.Domain.Entities;
 public class AppDbContext : DbContext
 {
+    public DbSet<User> Users { get; set; }
     public DbSet<TaskItem> Tasks { get; set; }
     public DbSet<ScheduleEntry> ScheduleEntries { get; set; }
     public DbSet<Reminder> Reminders { get; set; }
@@ -13,6 +14,19 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("users");
+            entity.HasKey(u => u.Id);
+            entity.Property(u => u.Id).HasColumnName("id");
+            entity.Property(u => u.Username).HasColumnName("username").HasMaxLength(100).IsRequired();
+            entity.Property(u => u.Email).HasColumnName("email").HasMaxLength(255).IsRequired();
+            entity.Property(u => u.PasswordHash).HasColumnName("password_hash").IsRequired();
+            entity.Property(u => u.CreatedAt).HasColumnName("created_at");
+            entity.HasIndex(u => u.Email).IsUnique();
+            entity.HasIndex(u => u.Username).IsUnique();
+        });
+
         // ── TaskItem ──────────────────────────────
         modelBuilder.Entity<TaskItem>(entity =>
         {

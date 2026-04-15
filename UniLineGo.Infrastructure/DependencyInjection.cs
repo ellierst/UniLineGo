@@ -14,6 +14,7 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString));
 
         // Реєстрація репозиторіїв
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITaskRepository, TaskRepository>();
         services.AddScoped<IScheduleRepository, ScheduleRepository>();
         services.AddScoped<IReminderRepository, ReminderRepository>();

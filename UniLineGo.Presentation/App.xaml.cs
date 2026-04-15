@@ -30,12 +30,15 @@ public partial class App : System.Windows.Application
 
             var services = new ServiceCollection();
             services.AddInfrastructure(connectionString);
+            services.AddScoped<AuthService>();
             services.AddScoped<TaskService>();
             services.AddScoped<ScheduleService>();
             services.AddScoped<ReminderService>();
             services.AddTransient<TaskViewModel>();
             services.AddTransient<ScheduleViewModel>();
             services.AddTransient<MainWindow>();
+            services.AddTransient<LoginWindow>();
+            services.AddTransient<RegisterWindow>();
 
             _serviceProvider = services.BuildServiceProvider();
 
@@ -45,8 +48,8 @@ public partial class App : System.Windows.Application
                 db.Database.Migrate();
             }
 
-            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+            var loginWindow = _serviceProvider.GetRequiredService<LoginWindow>();
+            loginWindow.Show();
         }
         catch (Exception ex)
         {
