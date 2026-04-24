@@ -22,9 +22,13 @@ public class AppDbContext : DbContext
             entity.Property(u => u.Username).HasColumnName("username").HasMaxLength(100).IsRequired();
             entity.Property(u => u.Email).HasColumnName("email").HasMaxLength(255).IsRequired();
             entity.Property(u => u.PasswordHash).HasColumnName("password_hash").IsRequired();
-            entity.Property(u => u.CreatedAt).HasColumnName("created_at");
             entity.HasIndex(u => u.Email).IsUnique();
             entity.HasIndex(u => u.Username).IsUnique();
+            entity.Property(u => u.CreatedAt)
+                .HasColumnName("created_at")
+                .HasConversion(
+                    v => v.ToUniversalTime(),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
         });
 
         // ── TaskItem ──────────────────────────────

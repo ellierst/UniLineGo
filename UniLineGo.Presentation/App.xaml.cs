@@ -36,9 +36,6 @@ public partial class App : System.Windows.Application
             services.AddScoped<ReminderService>();
             services.AddTransient<TaskViewModel>();
             services.AddTransient<ScheduleViewModel>();
-            services.AddTransient<MainWindow>();
-            services.AddTransient<LoginWindow>();
-            services.AddTransient<RegisterWindow>();
 
             _serviceProvider = services.BuildServiceProvider();
 
@@ -48,8 +45,10 @@ public partial class App : System.Windows.Application
                 db.Database.Migrate();
             }
 
-            var loginWindow = _serviceProvider.GetRequiredService<LoginWindow>();
-            loginWindow.Show();
+            var shell = new ShellWindow();
+            var authService = _serviceProvider.GetRequiredService<AuthService>();
+            shell.NavigateTo(new LoginView(authService, shell));
+            shell.Show();
         }
         catch (Exception ex)
         {

@@ -20,6 +20,9 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByUsernameAsync(string username)
         => await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
 
+    public async Task<User?> GetByIdAsync(int id)
+        => await _context.Users.FindAsync(id);
+
     public async Task<bool> ExistsAsync(string email, string username)
         => await _context.Users.AnyAsync(u => u.Email == email || u.Username == username);
 
@@ -28,5 +31,11 @@ public class UserRepository : IUserRepository
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
         return user.Id;
+    }
+
+    public async Task UpdateAsync(User user)
+    {
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
     }
 }

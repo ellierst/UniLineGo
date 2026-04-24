@@ -1,16 +1,19 @@
 using System.Windows;
+using System.Windows.Controls;
 using UniLineGo.Application.Services;
 
 namespace UniLineGo.Presentation.Views;
 
-public partial class LoginWindow : Window
+public partial class LoginView : UserControl
 {
     private readonly AuthService _authService;
+    private readonly ShellWindow _shell;
 
-    public LoginWindow(AuthService authService)
+    public LoginView(AuthService authService, ShellWindow shell)
     {
         InitializeComponent();
         _authService = authService;
+        _shell = shell;
     }
 
     private async void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -27,21 +30,13 @@ public partial class LoginWindow : Window
         var (success, message, user) = await _authService.LoginAsync(email, password);
 
         if (success)
-        {
-            new MainWindow().Show();
-            Close();
-        }
+            _shell.NavigateTo(new MainView(_authService, _shell));
         else
-        {
             ShowError(message);
-        }
     }
 
     private void GoToRegister_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-        new RegisterWindow(_authService).Show();
-        Close();
-    }
+        => _shell.NavigateTo(new RegisterView(_authService, _shell));
 
     private void ShowError(string message)
     {
