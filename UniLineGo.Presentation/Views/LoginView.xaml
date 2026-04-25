@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Grid Background="#EBDEC0">
+    <Grid Background="#EDE8ED">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="420"/>
@@ -10,50 +10,88 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="1" VerticalAlignment="Center"
-                Background="#FAF7F0" CornerRadius="16"
+                Background="#FFFFFF" CornerRadius="16"
                 Padding="48,44" Margin="0,40">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="24" ShadowDepth="0" Opacity="0.15" Color="#768E78"/>
+                <DropShadowEffect BlurRadius="24" ShadowDepth="0"
+                                  Opacity="0.15" Color="#C3B3D4"/>
             </Border.Effect>
+
             <StackPanel>
 
-                <TextBlock Text="UniLineGo" FontSize="34" FontWeight="Bold"
-                           HorizontalAlignment="Center" Foreground="#768E78"
-                           FontFamily="Segoe UI" Margin="0,0,0,6"/>
-                <TextBlock Text="Увійдіть до свого акаунту" FontSize="14"
-                           HorizontalAlignment="Center" Foreground="#C6C09C"
-                           FontFamily="Segoe UI" Margin="0,0,0,36"/>
+                <!-- Title -->
+                <TextBlock Text="UniLineGo"
+                           FontSize="34"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Foreground="#C3B3D4"
+                           Margin="0,0,0,6"/>
 
-                <TextBlock Text="Email" FontSize="13" Foreground="#768E78"
-                           FontFamily="Segoe UI" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                <TextBox x:Name="EmailBox" Height="44" Padding="14,10"
-                         FontSize="14" FontFamily="Segoe UI"
-                         BorderBrush="#C6C09C" BorderThickness="1.5"
-                         Background="#FDFBF7"/>
+                <TextBlock Text="Увійдіть до свого акаунту"
+                           FontSize="14"
+                           HorizontalAlignment="Center"
+                           Foreground="#DACADD"
+                           Margin="0,0,0,36"/>
 
-                <TextBlock Text="Пароль" FontSize="13" Foreground="#768E78"
-                           FontFamily="Segoe UI" FontWeight="SemiBold" Margin="0,16,0,6"/>
-                <PasswordBox x:Name="PasswordBox" Height="44" Padding="14,10"
-                             FontSize="14" FontFamily="Segoe UI"
-                             BorderBrush="#C6C09C" BorderThickness="1.5"
-                             Background="#FDFBF7"/>
+                <!-- Email -->
+                <TextBlock Text="Email"
+                           Foreground="#C3B3D4"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,6"/>
 
-                <TextBlock x:Name="ErrorText" Foreground="#E79897" FontSize="12"
-                           FontFamily="Segoe UI" Margin="0,10,0,0"
-                           TextWrapping="Wrap" Visibility="Collapsed"/>
+                <TextBox x:Name="EmailBox"
+                         Height="44"
+                         Padding="14,10"
+                         Background="#EDE8ED"
+                         BorderBrush="#DACADD"
+                         Foreground="#5A4E6D"
+                         FontFamily="Segoe UI"
+                         FontSize="14"
+                         BorderThickness="1.5"/>
 
-                <Button Content="Увійти" Height="46" Margin="0,24,0,0"
-                        FontSize="15" FontFamily="Segoe UI" FontWeight="SemiBold"
-                        BorderThickness="0" Cursor="Hand" Click="LoginButton_Click">
+                <!-- Password -->
+                <TextBlock Text="Пароль"
+                           Foreground="#C3B3D4"
+                           FontWeight="SemiBold"
+                           Margin="0,16,0,6"/>
+
+                <PasswordBox x:Name="PasswordBox"
+                             Height="44"
+                             Padding="14,10"
+                             Background="#EDE8ED"
+                             BorderBrush="#DACADD"
+                             Foreground="#C3B3D4"
+                             FontFamily="Segoe UI"
+                             FontSize="14"
+                             BorderThickness="1.5"/>
+
+                <!-- Error -->
+                <TextBlock x:Name="ErrorText"
+                           Foreground="#C3B3D4"
+                           FontSize="12"
+                           Margin="0,10,0,0"
+                           Visibility="Collapsed"/>
+
+                <!-- Login Button -->
+                <Button Content="Увійти"
+                        Height="46"
+                        Margin="0,24,0,0"
+                        FontSize="15"
+                        FontWeight="SemiBold"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="LoginButton_Click">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
-                                        <Border Background="#768E78" CornerRadius="8" Padding="0,12">
-                                            <ContentPresenter HorizontalAlignment="Center"
-                                                              VerticalAlignment="Center"
-                                                              TextElement.Foreground="White"/>
+                                        <Border Background="#C3B3D4"
+                                                CornerRadius="8">
+                                            <ContentPresenter
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                TextElement.Foreground="White"/>
                                         </Border>
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -62,12 +100,18 @@
                     </Button.Style>
                 </Button>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                    <TextBlock Text="Немає акаунту? " Foreground="#C6C09C"
-                               FontSize="13" FontFamily="Segoe UI"/>
-                    <TextBlock Text="Зареєструватись" Foreground="#E79897"
-                               FontSize="13" FontFamily="Segoe UI"
-                               Cursor="Hand" TextDecorations="Underline"
+                <!-- Register link -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0,20,0,0">
+
+                    <TextBlock Text="Немає акаунту? "
+                               Foreground="#DACADD"/>
+
+                    <TextBlock Text="Зареєструватись"
+                               Foreground="#C3B3D4"
+                               Cursor="Hand"
+                               TextDecorations="Underline"
                                MouseLeftButtonUp="GoToRegister_Click"/>
                 </StackPanel>
 
