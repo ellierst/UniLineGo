@@ -8,12 +8,14 @@ public partial class RegisterView : UserControl
 {
     private readonly AuthService _authService;
     private readonly ShellWindow _shell;
+    private readonly IServiceProvider _serviceProvider;
 
-    public RegisterView(AuthService authService, ShellWindow shell)
+    public RegisterView(AuthService authService, ShellWindow shell, IServiceProvider serviceProvider)
     {
         InitializeComponent();
         _authService = authService;
         _shell = shell;
+        _serviceProvider = serviceProvider;
     }
 
     private async void RegisterButton_Click(object sender, RoutedEventArgs e)
@@ -39,14 +41,14 @@ public partial class RegisterView : UserControl
         {
             MessageBox.Show("Реєстрація успішна! Тепер увійдіть.", "Успіх",
                 MessageBoxButton.OK, MessageBoxImage.Information);
-            _shell.NavigateTo(new LoginView(_authService, _shell));
+            _shell.NavigateTo(new LoginView(_authService, _shell, _serviceProvider));
         }
         else
             ShowError(message);
     }
 
     private void GoToLogin_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        => _shell.NavigateTo(new LoginView(_authService, _shell));
+        => _shell.NavigateTo(new LoginView(_authService, _shell, _serviceProvider));
 
     private void ShowError(string message)
     {

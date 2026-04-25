@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UniLineGo.Application.Services;
 using UniLineGo.Infrastructure.Data;
-using UniLineGo.Presentation.ViewModels;
 using UniLineGo.Presentation.Views;
 
 namespace UniLineGo.Presentation;
@@ -18,7 +17,7 @@ public partial class App : System.Windows.Application
     {
         base.OnStartup(e);
 
-         try
+        try
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
@@ -30,12 +29,10 @@ public partial class App : System.Windows.Application
 
             var services = new ServiceCollection();
             services.AddInfrastructure(connectionString);
-            services.AddScoped<AuthService>();
-            services.AddScoped<TaskService>();
-            services.AddScoped<ScheduleService>();
-            services.AddScoped<ReminderService>();
-            services.AddTransient<TaskViewModel>();
-            services.AddTransient<ScheduleViewModel>();
+            services.AddSingleton<AuthService>();
+            services.AddSingleton<TaskService>();
+            services.AddSingleton<ScheduleService>();
+            services.AddSingleton<ReminderService>();
 
             _serviceProvider = services.BuildServiceProvider();
 
@@ -47,7 +44,7 @@ public partial class App : System.Windows.Application
 
             var shell = new ShellWindow();
             var authService = _serviceProvider.GetRequiredService<AuthService>();
-            shell.NavigateTo(new LoginView(authService, shell));
+            shell.NavigateTo(new LoginView(authService, shell, _serviceProvider));
             shell.Show();
         }
         catch (Exception ex)
@@ -60,6 +57,7 @@ public partial class App : System.Windows.Application
             Shutdown();
         }
     }
+
     protected override void OnExit(ExitEventArgs e)
     {
         _serviceProvider.Dispose();

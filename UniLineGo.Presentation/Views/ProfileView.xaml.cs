@@ -8,14 +8,31 @@ public partial class ProfileView : UserControl
 {
     private readonly AuthService _authService;
     private readonly ShellWindow _shell;
+    private readonly IServiceProvider? _serviceProvider;
+    private readonly MainView? _mainView;
 
+    // Виклик з MainView (через NavSettings)
+    public ProfileView(AuthService authService, ShellWindow shell, MainView mainView, IServiceProvider serviceProvider)
+    {
+        InitializeComponent();
+        _authService = authService;
+        _shell = shell;
+        _mainView = mainView;
+        _serviceProvider = serviceProvider;
+        LoadUser();
+    }
+
+    // Старий конструктор для сумісності (якщо десь ще використовується)
     public ProfileView(AuthService authService, ShellWindow shell)
     {
         InitializeComponent();
         _authService = authService;
         _shell = shell;
+        LoadUser();
+    }
 
-        // Заповни поточні дані
+    private void LoadUser()
+    {
         var user = AuthService.CurrentUser;
         if (user != null)
         {
@@ -39,7 +56,7 @@ public partial class ProfileView : UserControl
                 return;
             }
 
-            if (!email.Contains('@') || !email.Contains('.') || string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(email) || !email.Contains('@') || !email.Contains('.'))
             {
                 ShowMessage("Введіть коректний email.", isError: true);
                 return;
@@ -53,7 +70,8 @@ public partial class ProfileView : UserControl
 
             var userId = AuthService.CurrentUser!.Id;
             var (success, message) = await _authService.UpdateProfileAsync(
-                userId, username, email, string.IsNullOrEmpty(newPassword) ? null : newPassword);
+                userId, username, email,
+                string.IsNullOrEmpty(newPassword) ? null : newPassword);
 
             ShowMessage(message, isError: !success);
 
@@ -72,15 +90,16 @@ public partial class ProfileView : UserControl
 
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
-        try
+        // Якщо відкрито всередині MainView — повертаємось на головний екран MainView
+        if (_mainView != null)
         {
-            _shell.NavigateTo(new MainView(_authService, _shell));
+            _mainView.ShowTasksList();
+            return;
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Помилка: {ex.Message}", "Помилка",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+
+        // Fallback (не повинен трапитись)
+        if (_shell != null && _serviceProvider != null)
+            _shell.NavigateTo(new LoginView(_authService, _shell, _serviceProvider));
     }
 
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
@@ -89,11 +108,15 @@ public partial class ProfileView : UserControl
             "Ви впевнені що хочете вийти?", "Вихід",
             MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-        if (result == MessageBoxResult.Yes)
-        {
-            _authService.Logout();
-            _shell.NavigateTo(new LoginView(_authService, _shell));
-        }
+        if (result != MessageBoxResult.Yes) return;
+
+        _authService.Logout();
+
+        if (_serviceProvider != null)
+            _shell.NavigateTo(new LoginView(_authService, _shell, _serviceProvider));
+        else
+            MessageBox.Show("Не вдалось повернутись на екран входу.", "Помилка",
+                MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
     private void ShowMessage(string message, bool isError)

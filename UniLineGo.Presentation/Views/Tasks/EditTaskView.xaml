@@ -1,0 +1,165 @@
+<UserControl x:Class="UniLineGo.Presentation.Views.EditTaskView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Background="#F5F2F0" Margin="32,28,32,28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,24" VerticalAlignment="Center">
+            <Button Content="←"
+                    FontSize="20"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Foreground="#6B5B7B"
+                    Padding="0,0,12,0"
+                    Click="BackButton_Click"/>
+            <TextBlock Text="Редагувати завдання"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="#3D3047"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Form card -->
+        <Border Grid.Row="1" Background="White" CornerRadius="12"
+                Padding="32,28" VerticalAlignment="Top">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="16" ShadowDepth="0" Opacity="0.06" Color="#6B5B7B"/>
+            </Border.Effect>
+
+            <StackPanel>
+
+                <!-- Назва -->
+                <TextBlock Text="Назва"
+                           Foreground="#6B5B7B" FontSize="13" FontWeight="SemiBold"
+                           Margin="0,0,0,6"/>
+                <Border Background="#F5F2F0" CornerRadius="8"
+                        BorderBrush="#E0DAE6" BorderThickness="1" Margin="0,0,0,16">
+                    <TextBox x:Name="TitleBox"
+                             Background="Transparent" BorderThickness="0"
+                             Height="44" Padding="14,0" VerticalContentAlignment="Center"
+                             Foreground="#3D3047" FontSize="14"/>
+                </Border>
+
+                <!-- Опис -->
+                <TextBlock Text="Опис"
+                           Foreground="#6B5B7B" FontSize="13" FontWeight="SemiBold"
+                           Margin="0,0,0,6"/>
+                <Border Background="#F5F2F0" CornerRadius="8"
+                        BorderBrush="#E0DAE6" BorderThickness="1" Margin="0,0,0,20">
+                    <TextBox x:Name="DescriptionBox"
+                             Background="Transparent" BorderThickness="0"
+                             Height="80" Padding="14,10" TextWrapping="Wrap"
+                             AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                             Foreground="#3D3047" FontSize="14"/>
+                </Border>
+
+                <!-- Дедлайн + Пріоритет -->
+                <Grid Margin="0,0,0,28">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                        <TextBlock Text="Дедлайн" Foreground="#6B5B7B"
+                                   FontSize="13" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <Border Background="#F5F2F0" CornerRadius="8"
+                                BorderBrush="#E0DAE6" BorderThickness="1">
+                            <DatePicker x:Name="DeadlinePicker"
+                                        Background="Transparent" BorderThickness="0"
+                                        Height="40" Foreground="#3D3047" FontSize="13"/>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="0,0,12,0">
+                        <TextBlock Text="Пріоритет" Foreground="#6B5B7B"
+                                   FontSize="13" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="PriorityCombo" Height="40" FontSize="13"
+                                  Background="#F5F2F0" BorderBrush="#E0DAE6" Foreground="#3D3047">
+                            <ComboBoxItem Content="Низький" Tag="1"/>
+                            <ComboBoxItem Content="Середній" Tag="2" IsSelected="True"/>
+                            <ComboBoxItem Content="Високий" Tag="3"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Margin="0,0,12,0">
+                        <TextBlock Text="Категорія" Foreground="#6B5B7B"
+                                   FontSize="13" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="CategoryCombo" Height="40" FontSize="13"
+                                  Background="#F5F2F0" BorderBrush="#E0DAE6" Foreground="#3D3047">
+                            <ComboBoxItem Content="Навчання" IsSelected="True"/>
+                            <ComboBoxItem Content="Робота"/>
+                            <ComboBoxItem Content="Особисте"/>
+                            <ComboBoxItem Content="Інше"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="3">
+                        <TextBlock Text="Нагадування" Foreground="#6B5B7B"
+                                   FontSize="13" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="ReminderCombo" Height="40" FontSize="13"
+                                  Background="#F5F2F0" BorderBrush="#E0DAE6" Foreground="#3D3047">
+                            <ComboBoxItem Content="За день" IsSelected="True"/>
+                            <ComboBoxItem Content="За 2 дні"/>
+                            <ComboBoxItem Content="За тиждень"/>
+                            <ComboBoxItem Content="Без нагадування"/>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Error -->
+                <TextBlock x:Name="ErrorText"
+                           Foreground="#C62828" FontSize="12"
+                           Margin="0,0,0,12" Visibility="Collapsed"/>
+
+                <!-- Buttons -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Content="Зберегти"
+                            Height="46" FontSize="15" FontWeight="SemiBold"
+                            Cursor="Hand" Click="SaveButton_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#5A7A5A" CornerRadius="8"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      TextElement.Foreground="White"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Grid.Column="2" Content="Скасувати"
+                            Height="46" FontSize="15" FontWeight="SemiBold"
+                            Cursor="Hand" Click="BackButton_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#EDE8ED" CornerRadius="8"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      TextElement.Foreground="#6B5B7B"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

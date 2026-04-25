@@ -1,0 +1,19 @@
+<UserControl x:Class="UniLineGo.Presentation.Views.HomePageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Background="#F5F2F0" Margin="32,28">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Головна"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="#3D3047"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,12"/>
+            <TextBlock Text="Ласкаво просимо до UniLineGo!"
+                       FontSize="16"
+                       Foreground="#9A8A9E"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

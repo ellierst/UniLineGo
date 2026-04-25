@@ -2,6 +2,7 @@ namespace UniLineGo.Infrastructure.Data;
 
 using Microsoft.EntityFrameworkCore;
 using UniLineGo.Domain.Entities;
+
 public class AppDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
@@ -31,34 +32,33 @@ public class AppDbContext : DbContext
                     v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
         });
 
-        // ── TaskItem ──────────────────────────────
         modelBuilder.Entity<TaskItem>(entity =>
         {
             entity.ToTable("tasks");
             entity.HasKey(t => t.Id);
             entity.Property(t => t.Id).HasColumnName("id");
-            entity.Property(t => t.Title)
-                  .HasColumnName("title")
-                  .IsRequired()
-                  .HasMaxLength(255);
+            entity.Property(t => t.UserId).HasColumnName("user_id");
+            entity.Property(t => t.Title).HasColumnName("title").IsRequired().HasMaxLength(255);
             entity.Property(t => t.Description).HasColumnName("description");
             entity.Property(t => t.Deadline).HasColumnName("deadline");
             entity.Property(t => t.IsCompleted).HasColumnName("is_completed");
             entity.Property(t => t.Priority).HasColumnName("priority");
             entity.Property(t => t.CreatedAt).HasColumnName("created_at");
             entity.Property(t => t.UpdatedAt).HasColumnName("updated_at");
+
+            // зв'язок task → user
+            entity.HasOne(t => t.User)
+                  .WithMany()
+                  .HasForeignKey(t => t.UserId)
+                  .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // ── ScheduleEntry ─────────────────────────
         modelBuilder.Entity<ScheduleEntry>(entity =>
         {
             entity.ToTable("schedule_entries");
             entity.HasKey(s => s.Id);
             entity.Property(s => s.Id).HasColumnName("id");
-            entity.Property(s => s.Title)
-                  .HasColumnName("title")
-                  .IsRequired()
-                  .HasMaxLength(255);
+            entity.Property(s => s.Title).HasColumnName("title").IsRequired().HasMaxLength(255);
             entity.Property(s => s.Room).HasColumnName("room");
             entity.Property(s => s.StartTime).HasColumnName("start_time");
             entity.Property(s => s.EndTime).HasColumnName("end_time");
@@ -67,7 +67,6 @@ public class AppDbContext : DbContext
             entity.Property(s => s.UpdatedAt).HasColumnName("updated_at");
         });
 
-        // ── Reminder ──────────────────────────────
         modelBuilder.Entity<Reminder>(entity =>
         {
             entity.ToTable("reminders");
@@ -79,7 +78,6 @@ public class AppDbContext : DbContext
             entity.Property(r => r.IsSent).HasColumnName("is_sent");
             entity.Property(r => r.CreatedAt).HasColumnName("created_at");
 
-            // Зв'язки
             entity.HasOne(r => r.Task)
                   .WithMany(t => t.Reminders)
                   .HasForeignKey(r => r.TaskId)
