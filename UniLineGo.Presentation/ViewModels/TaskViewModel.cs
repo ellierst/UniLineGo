@@ -106,7 +106,7 @@ public class TaskItemDisplay
     });
 
     public string DeadlineText => Deadline.HasValue
-        ? Deadline.Value.ToLocalTime().ToString("dd.MM.yyyy")
+        ? Deadline.Value.ToLocalTime().ToString("dd.MM.yyyy HH:mm")
         : "—";
 
     public TaskItemDisplay(TaskItem task)

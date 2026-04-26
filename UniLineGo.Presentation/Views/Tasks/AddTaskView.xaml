@@ -74,90 +74,229 @@
                              FontSize="14"/>
                 </Border>
 
-                <!-- Row: Дедлайн | Пріоритет | Категорія | Нагадування -->
+                <!-- Row: Дедлайн (дата + час) | Нагадування -->
                 <Grid Margin="0,0,0,28">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="16"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <!-- Дедлайн -->
-                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                    <StackPanel Grid.Column="0">
                         <TextBlock Text="Дедлайн"
+                                   Foreground="#6B5B7B"
+                                   FontSize="13"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,6"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Custom date button + popup -->
+                            <Grid Grid.Column="0">
+                                <Border Background="#F5F2F0" CornerRadius="8"
+                                        BorderBrush="#E0DAE6" BorderThickness="1">
+                                    <Button x:Name="DatePickerButton"
+                                            Height="44"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            Click="DatePickerButton_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="Transparent" Padding="12,0">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock x:Name="DateLabel"
+                                                                   Grid.Column="0"
+                                                                   Text="Оберіть дату"
+                                                                   Foreground="#B0A4BA"
+                                                                   FontSize="13"
+                                                                   VerticalAlignment="Center"/>
+                                                        <TextBlock Grid.Column="1"
+                                                                   Text="&#x1F4C5;"
+                                                                   FontSize="14"
+                                                                   Foreground="#9A8A9E"
+                                                                   VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Border>
+                                <Popup x:Name="CalendarPopup"
+                                       PlacementTarget="{Binding ElementName=DatePickerButton}"
+                                       Placement="Bottom"
+                                       AllowsTransparency="True"
+                                       StaysOpen="False">
+                                    <Border Background="White" BorderBrush="#E0DAE6"
+                                            BorderThickness="1" CornerRadius="8" Margin="0,4,0,0">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="16" ShadowDepth="2"
+                                                              Opacity="0.1" Color="#6B5B7B"/>
+                                        </Border.Effect>
+                                        <Calendar x:Name="DeadlineCalendar"
+                                                  SelectedDatesChanged="DeadlineCalendar_SelectedDatesChanged"/>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+
+                            <!-- Time picker (hour:minute) -->
+                            <Border Grid.Column="2" Background="#F5F2F0" CornerRadius="8"
+                                    BorderBrush="#E0DAE6" BorderThickness="1">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
+                                            Margin="10,0">
+                                    <!-- Година -->
+                                    <TextBlock Text="&#x1F554;"
+                                               FontSize="14"
+                                               Foreground="#9A8A9E"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,6,0"/>
+                                    <TextBox x:Name="HourBox"
+                                             Width="32"
+                                             Height="36"
+                                             MaxLength="2"
+                                             Text="00"
+                                             TextAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Background="Transparent"
+                                             BorderThickness="0"
+                                             Foreground="#3D3047"
+                                             FontSize="14"
+                                             FontWeight="SemiBold"
+                                             PreviewTextInput="TimeBox_PreviewTextInput"
+                                             LostFocus="HourBox_LostFocus"/>
+                                    <TextBlock Text=":"
+                                               FontSize="15"
+                                               FontWeight="Bold"
+                                               Foreground="#6B5B7B"
+                                               VerticalAlignment="Center"
+                                               Margin="2,0"/>
+                                    <TextBox x:Name="MinuteBox"
+                                             Width="32"
+                                             Height="36"
+                                             MaxLength="2"
+                                             Text="00"
+                                             TextAlignment="Center"
+                                             VerticalContentAlignment="Center"
+                                             Background="Transparent"
+                                             BorderThickness="0"
+                                             Foreground="#3D3047"
+                                             FontSize="14"
+                                             FontWeight="SemiBold"
+                                             PreviewTextInput="TimeBox_PreviewTextInput"
+                                             LostFocus="MinuteBox_LostFocus"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- Нагадування -->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Нагадування"
                                    Foreground="#6B5B7B"
                                    FontSize="13"
                                    FontWeight="SemiBold"
                                    Margin="0,0,0,6"/>
                         <Border Background="#F5F2F0" CornerRadius="8"
                                 BorderBrush="#E0DAE6" BorderThickness="1">
-                            <DatePicker x:Name="DeadlinePicker"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Height="40"
-                                        Foreground="#3D3047"
-                                        FontSize="13"/>
+                            <ComboBox x:Name="ReminderCombo"
+                                      Height="44"
+                                      FontSize="13"
+                                      Background="Transparent"
+                                      BorderThickness="0"
+                                      Foreground="#3D3047"
+                                      Padding="8,0"
+                                      VerticalContentAlignment="Center">
+                                <ComboBox.Resources>
+                                    <Style TargetType="ComboBoxItem">
+                                        <Setter Property="Foreground" Value="#3D3047"/>
+                                        <Setter Property="FontSize" Value="13"/>
+                                        <Setter Property="Padding" Value="12,8"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsHighlighted" Value="True">
+                                                <Setter Property="Background" Value="#F0EBF4"/>
+                                                <Setter Property="Foreground" Value="#6B5B7B"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#EDE8ED"/>
+                                                <Setter Property="Foreground" Value="#3D3047"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ComboBox">
+                                                    <Grid>
+                                                        <ToggleButton x:Name="ToggleButton"
+                                                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay,
+                                                                          RelativeSource={RelativeSource TemplatedParent}}"
+                                                                      Background="Transparent"
+                                                                      BorderThickness="0"
+                                                                      Focusable="False"
+                                                                      ClickMode="Press">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="28"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <ContentPresenter Grid.Column="0"
+                                                                    Content="{TemplateBinding SelectionBoxItem}"
+                                                                    ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                                    Margin="12,0,0,0"
+                                                                    VerticalAlignment="Center"/>
+                                                                <Path Grid.Column="1"
+                                                                      Data="M 0 0 L 5 5 L 10 0"
+                                                                      Stroke="#9A8A9E"
+                                                                      StrokeThickness="1.5"
+                                                                      HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center"/>
+                                                            </Grid>
+                                                        </ToggleButton>
+                                                        <Popup x:Name="Popup"
+                                                               IsOpen="{TemplateBinding IsDropDownOpen}"
+                                                               AllowsTransparency="True"
+                                                               Focusable="False"
+                                                               PopupAnimation="Slide">
+                                                            <Border Background="White"
+                                                                    BorderBrush="#E0DAE6"
+                                                                    BorderThickness="1"
+                                                                    CornerRadius="8"
+                                                                    Margin="0,2,0,0">
+                                                                <Border.Effect>
+                                                                    <DropShadowEffect BlurRadius="12"
+                                                                        ShadowDepth="2"
+                                                                        Opacity="0.1"
+                                                                        Color="#6B5B7B"/>
+                                                                </Border.Effect>
+                                                                <ScrollViewer SnapsToDevicePixels="True">
+                                                                    <ItemsPresenter/>
+                                                                </ScrollViewer>
+                                                            </Border>
+                                                        </Popup>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ComboBox.Resources>
+                                <ComboBoxItem Content="За 15 хвилин"/>
+                                <ComboBoxItem Content="За 30 хвилин"/>
+                                <ComboBoxItem Content="За годину"/>
+                                <ComboBoxItem Content="За день" IsSelected="True"/>
+                                <ComboBoxItem Content="За 2 дні"/>
+                                <ComboBoxItem Content="За тиждень"/>
+                                <ComboBoxItem Content="Без нагадування"/>
+                            </ComboBox>
                         </Border>
-                    </StackPanel>
-
-                    <!-- Пріоритет -->
-                    <StackPanel Grid.Column="1" Margin="0,0,12,0">
-                        <TextBlock Text="Пріоритет"
-                                   Foreground="#6B5B7B"
-                                   FontSize="13"
-                                   FontWeight="SemiBold"
-                                   Margin="0,0,0,6"/>
-                        <ComboBox x:Name="PriorityCombo"
-                                  Height="40"
-                                  FontSize="13"
-                                  Background="#F5F2F0"
-                                  BorderBrush="#E0DAE6"
-                                  Foreground="#3D3047">
-                            <ComboBoxItem Content="Низький" Tag="1"/>
-                            <ComboBoxItem Content="Середній" Tag="2" IsSelected="True"/>
-                            <ComboBoxItem Content="Високий" Tag="3"/>
-                        </ComboBox>
-                    </StackPanel>
-
-                    <!-- Категорія -->
-                    <StackPanel Grid.Column="2" Margin="0,0,12,0">
-                        <TextBlock Text="Категорія"
-                                   Foreground="#6B5B7B"
-                                   FontSize="13"
-                                   FontWeight="SemiBold"
-                                   Margin="0,0,0,6"/>
-                        <ComboBox x:Name="CategoryCombo"
-                                  Height="40"
-                                  FontSize="13"
-                                  Background="#F5F2F0"
-                                  BorderBrush="#E0DAE6"
-                                  Foreground="#3D3047">
-                            <ComboBoxItem Content="Навчання" IsSelected="True"/>
-                            <ComboBoxItem Content="Робота"/>
-                            <ComboBoxItem Content="Особисте"/>
-                            <ComboBoxItem Content="Інше"/>
-                        </ComboBox>
-                    </StackPanel>
-
-                    <!-- Нагадування -->
-                    <StackPanel Grid.Column="3">
-                        <TextBlock Text="Нагадування"
-                                   Foreground="#6B5B7B"
-                                   FontSize="13"
-                                   FontWeight="SemiBold"
-                                   Margin="0,0,0,6"/>
-                        <ComboBox x:Name="ReminderCombo"
-                                  Height="40"
-                                  FontSize="13"
-                                  Background="#F5F2F0"
-                                  BorderBrush="#E0DAE6"
-                                  Foreground="#3D3047">
-                            <ComboBoxItem Content="За день" IsSelected="True"/>
-                            <ComboBoxItem Content="За 2 дні"/>
-                            <ComboBoxItem Content="За тиждень"/>
-                            <ComboBoxItem Content="Без нагадування"/>
-                        </ComboBox>
                     </StackPanel>
 
                 </Grid>

@@ -55,9 +55,9 @@ public partial class MainView : UserControl
     private void NavCalendar_Click(object sender, RoutedEventArgs e)
     {
         SetActiveNav(NavCalendar);
-        ContentArea.Content = CreatePlaceholder("Календар");
+        ContentArea.Content = new CalendarView(_taskService, this);
     }
-
+    
     private void NavReminders_Click(object sender, RoutedEventArgs e)
     {
         SetActiveNav(NavReminders);

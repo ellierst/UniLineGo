@@ -130,7 +130,7 @@
                             Padding="24,10">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border Background="Transparent" Padding="{TemplateBinding Padding}">
+                                <Border x:Name="Bg" Background="Transparent" Padding="{TemplateBinding Padding}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="&#x2192;" FontSize="16" Width="24"
                                                    Foreground="#DACADD" VerticalAlignment="Center"/>
@@ -138,6 +138,11 @@
                                                    Foreground="#DACADD" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Bg" Property="Background" Value="#7D6B8E"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
