@@ -10,10 +10,6 @@
                        Foreground="#3D3047"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,12"/>
-            <TextBlock Text="Ласкаво просимо до UniLineGo!"
-                       FontSize="16"
-                       Foreground="#9A8A9E"
-                       HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>

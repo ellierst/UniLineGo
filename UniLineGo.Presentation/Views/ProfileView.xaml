@@ -132,16 +132,6 @@
                     </Button.Style>
                 </Button>
 
-                <!-- Back -->
-                <Button Content="← Назад"
-                        Height="36"
-                        Margin="0,8,0,0"
-                        Background="Transparent"
-                        Foreground="#DACADD"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Click="BackButton_Click"/>
-
                 <Separator Background="#DACADD" Margin="0,20" Opacity="0.4"/>
 
                 <!-- Logout -->

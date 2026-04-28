@@ -88,20 +88,6 @@ public partial class ProfileView : UserControl
         }
     }
 
-    private void BackButton_Click(object sender, RoutedEventArgs e)
-    {
-        // Якщо відкрито всередині MainView — повертаємось на головний екран MainView
-        if (_mainView != null)
-        {
-            _mainView.ShowTasksList();
-            return;
-        }
-
-        // Fallback (не повинен трапитись)
-        if (_shell != null && _serviceProvider != null)
-            _shell.NavigateTo(new LoginView(_authService, _shell, _serviceProvider));
-    }
-
     private void LogoutButton_Click(object sender, RoutedEventArgs e)
     {
         var result = MessageBox.Show(

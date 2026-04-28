@@ -1,19 +1,22 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
+using Microsoft.Extensions.DependencyInjection;
 using UniLineGo.Application.Services;
 
 namespace UniLineGo.Presentation.Views;
 
 public partial class MainView : UserControl
 {
-    private readonly AuthService _authService;
-    private readonly TaskService _taskService;
-    private readonly ShellWindow _shell;
+    private readonly AuthService      _authService;
+    private readonly TaskService      _taskService;
+    private readonly ShellWindow      _shell;
     private readonly IServiceProvider _serviceProvider;
 
     private Button? _activeNav;
 
-    public MainView(AuthService authService, TaskService taskService, ShellWindow shell, IServiceProvider serviceProvider)
+    public MainView(AuthService authService, TaskService taskService,
+                    ShellWindow shell, IServiceProvider serviceProvider)
     {
         try { InitializeComponent(); }
         catch (Exception ex)
@@ -23,9 +26,9 @@ public partial class MainView : UserControl
             throw;
         }
 
-        _authService = authService;
-        _taskService = taskService;
-        _shell = shell;
+        _authService     = authService;
+        _taskService     = taskService;
+        _shell           = shell;
         _serviceProvider = serviceProvider;
 
         try
@@ -35,10 +38,15 @@ public partial class MainView : UserControl
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Помилка завантаження TasksView:\n{ex.Message}\n\n{ex.InnerException?.Message}\n\n{ex.StackTrace}",
+            MessageBox.Show(
+                $"Помилка завантаження TasksView:\n{ex.Message}\n\n{ex.InnerException?.Message}\n\n{ex.StackTrace}",
                 "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    //  Навігація
+    // ═══════════════════════════════════════════════════════════════════════
 
     private void NavHome_Click(object sender, RoutedEventArgs e)
     {
@@ -57,23 +65,10 @@ public partial class MainView : UserControl
         SetActiveNav(NavCalendar);
         ContentArea.Content = new CalendarView(_taskService, this);
     }
-    
-    private void NavReminders_Click(object sender, RoutedEventArgs e)
-    {
-        SetActiveNav(NavReminders);
-        ContentArea.Content = CreatePlaceholder("Нагадування");
-    }
-
-    private void NavStats_Click(object sender, RoutedEventArgs e)
-    {
-        SetActiveNav(NavStats);
-        ContentArea.Content = CreatePlaceholder("Статистика");
-    }
 
     private void NavSettings_Click(object sender, RoutedEventArgs e)
     {
         SetActiveNav(NavSettings);
-        // Передаємо this (MainView) і serviceProvider щоб ProfileView міг правильно навігувати
         ContentArea.Content = new ProfileView(_authService, _shell, this, _serviceProvider);
     }
 
@@ -83,12 +78,15 @@ public partial class MainView : UserControl
             "Ви впевнені що хочете вийти?", "Вихід",
             MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-        if (result == MessageBoxResult.Yes)
-        {
-            _authService.Logout();
-            _shell.NavigateTo(new LoginView(_authService, _shell, _serviceProvider));
-        }
+        if (result != MessageBoxResult.Yes) return;
+
+        _authService.Logout();
+        _shell.NavigateTo(new LoginView(_authService, _shell, _serviceProvider));
     }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    //  Допоміжні
+    // ═══════════════════════════════════════════════════════════════════════
 
     private void SetActiveNav(Button btn)
     {
@@ -105,18 +103,18 @@ public partial class MainView : UserControl
         var uc = new UserControl();
         uc.Content = new TextBlock
         {
-            Text = title,
-            FontSize = 28,
+            Text       = title,
+            FontSize   = 28,
             FontWeight = FontWeights.SemiBold,
             Foreground = new System.Windows.Media.SolidColorBrush(
                 (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#C3B3D4")),
             HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center
+            VerticalAlignment   = VerticalAlignment.Center
         };
         return uc;
     }
 
-    public void ShowAddTask() => ContentArea.Content = new AddTaskView(_taskService, this);
+    public void ShowAddTask()  => ContentArea.Content = new AddTaskView(_taskService, this);
     public void ShowEditTask(int taskId) => ContentArea.Content = new EditTaskView(_taskService, this, taskId);
     public void ShowTasksList()
     {
