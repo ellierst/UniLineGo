@@ -11,7 +11,6 @@ public partial class ProfileView : UserControl
     private readonly IServiceProvider? _serviceProvider;
     private readonly MainView? _mainView;
 
-    // Виклик з MainView (через NavSettings)
     public ProfileView(AuthService authService, ShellWindow shell, MainView mainView, IServiceProvider serviceProvider)
     {
         InitializeComponent();
@@ -22,7 +21,6 @@ public partial class ProfileView : UserControl
         LoadUser();
     }
 
-    // Старий конструктор для сумісності (якщо десь ще використовується)
     public ProfileView(AuthService authService, ShellWindow shell)
     {
         InitializeComponent();

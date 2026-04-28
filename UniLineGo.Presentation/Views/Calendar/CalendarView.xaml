@@ -44,7 +44,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- ══ Header ══ -->
         <Grid Grid.Row="0" Margin="0,0,0,24">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -83,7 +82,6 @@
             </Button>
         </Grid>
 
-        <!-- ══ Month navigation ══ -->
         <StackPanel Grid.Row="1" Orientation="Horizontal"
                     Margin="0,0,0,12" VerticalAlignment="Center">
             <Button Style="{StaticResource NavButtonStyle}" Click="PrevMonth_Click">
@@ -105,7 +103,6 @@
             </Button>
         </StackPanel>
 
-        <!-- ══ Day-of-week headers ══ -->
         <Grid Grid.Row="2" Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -125,7 +122,6 @@
             <TextBlock Grid.Column="6" Text="Нд" Style="{StaticResource DayHeaderStyle}"/>
         </Grid>
 
-        <!-- ══ Calendar grid built in code-behind ══ -->
         <Border Grid.Row="3" Background="White" CornerRadius="12" Margin="0,6,0,0">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="16" ShadowDepth="0" Opacity="0.06" Color="#6B5B7B"/>

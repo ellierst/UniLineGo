@@ -11,7 +11,7 @@ public partial class TasksView : UserControl
 {
     private readonly TaskViewModel _vm;
     private readonly MainView _mainView;
-    private bool _isUpdating = false; // блокує зайві події під час оновлення списку
+    private bool _isUpdating = false;
 
     public TasksView(TaskService taskService, MainView mainView)
     {
@@ -20,7 +20,6 @@ public partial class TasksView : UserControl
 
         InitializeComponent();
 
-        // Встановлюємо початковий індикатор під "Всі" після рендерингу
         Loaded += (_, _) => MoveIndicator(TabAll);
 
         _ = LoadAsync();
@@ -45,8 +44,6 @@ public partial class TasksView : UserControl
         FooterCount.Text = $"Показано {count} із {count} завдань";
     }
 
-    // ── Search ────────────────────────────────────────────────────
-
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (_vm == null) return;
@@ -54,8 +51,6 @@ public partial class TasksView : UserControl
             ? Visibility.Visible : Visibility.Collapsed;
         _vm.SearchText = SearchBox.Text;
     }
-
-    // ── Tab filters ───────────────────────────────────────────────
 
     private void TabAll_Click(object sender, RoutedEventArgs e) => ApplyTab("Всі", TabAll);
     private void TabPending_Click(object sender, RoutedEventArgs e) => ApplyTab("На виконання", TabPending);
@@ -78,20 +73,14 @@ public partial class TasksView : UserControl
         MoveIndicator(btn);
     }
 
-    // ── Add ───────────────────────────────────────────────────────
-
     private void AddTask_Click(object sender, RoutedEventArgs e)
         => _mainView.ShowAddTask();
-
-    // ── Edit ──────────────────────────────────────────────────────
 
     private void EditTask_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Button btn && btn.Tag is int id)
             _mainView.ShowEditTask(id);
     }
-
-    // ── Delete ────────────────────────────────────────────────────
 
     private async void DeleteTask_Click(object sender, RoutedEventArgs e)
     {
@@ -110,8 +99,6 @@ public partial class TasksView : UserControl
             RefreshList();
     }
 
-    // ── Toggle completion ─────────────────────────────────────────
-
     private async void TaskCheck_Changed(object sender, RoutedEventArgs e)
     {
         // Ігноруємо події під час програмного оновлення списку
@@ -123,8 +110,6 @@ public partial class TasksView : UserControl
         RefreshList();
         _isUpdating = false;
     }
-
-    // ── Row hover ─────────────────────────────────────────────────
 
     private void MoveIndicator(Button btn)
     {

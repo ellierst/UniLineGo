@@ -19,7 +19,6 @@
 
             <StackPanel>
 
-                <!-- Title -->
                 <TextBlock Text="Мій профіль"
                            FontSize="28"
                            FontWeight="Bold"
@@ -27,7 +26,6 @@
                            Foreground="#C3B3D4"
                            Margin="0,0,0,32"/>
 
-                <!-- Username -->
                 <TextBlock Text="Ім'я користувача"
                            Foreground="#C3B3D4"
                            FontWeight="SemiBold"
@@ -43,7 +41,6 @@
                          FontSize="14"    
                          BorderThickness="1.5"/>
 
-                <!-- Email -->
                 <TextBlock Text="Email"
                            Foreground="#C3B3D4"
                            FontWeight="SemiBold"
@@ -59,7 +56,6 @@
                          FontSize="14"
                          BorderThickness="1.5"/>
 
-                <!-- New Password -->
                 <TextBlock Text="Новий пароль"
                            Foreground="#C3B3D4"
                            FontWeight="SemiBold"
@@ -75,7 +71,6 @@
                              FontSize="14"
                              BorderThickness="1.5"/>
 
-                <!-- Confirm -->
                 <TextBlock Text="Підтвердіть новий пароль"
                            Foreground="#C3B3D4"
                            FontWeight="SemiBold"
@@ -91,14 +86,12 @@
                              FontSize="14"
                              BorderThickness="1.5"/>
 
-                <!-- Message -->
                 <TextBlock x:Name="MessageText"
                            FontSize="12"
                            Margin="0,10,0,0"
                            Visibility="Collapsed"
                            Foreground="#C3B3D4"/>
 
-                <!-- Save -->
                 <Button Content="Зберегти зміни"
                         Height="46"
                         Margin="0,24,0,0"
@@ -134,7 +127,6 @@
 
                 <Separator Background="#DACADD" Margin="0,20" Opacity="0.4"/>
 
-                <!-- Logout -->
                 <Button Content="Вийти з акаунту"
                         Height="46"
                         FontSize="15"

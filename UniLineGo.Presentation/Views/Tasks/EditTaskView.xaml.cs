@@ -44,7 +44,6 @@ public partial class EditTaskView : UserControl
             DeadlineCalendar.SelectedDate = local.Date;
             HourBox.Text = local.Hour.ToString("D2");
             MinuteBox.Text = local.Minute.ToString("D2");
-            // Template may not be applied yet — defer update
             _ = Dispatcher.InvokeAsync(UpdateDateLabel,
                 System.Windows.Threading.DispatcherPriority.Loaded);
         }

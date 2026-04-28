@@ -44,10 +44,6 @@ public partial class MainView : UserControl
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════════════
-    //  Навігація
-    // ═══════════════════════════════════════════════════════════════════════
-
     private void NavHome_Click(object sender, RoutedEventArgs e)
     {
         SetActiveNav(NavHome);
@@ -83,10 +79,6 @@ public partial class MainView : UserControl
         _authService.Logout();
         _shell.NavigateTo(new LoginView(_authService, _shell, _serviceProvider));
     }
-
-    // ═══════════════════════════════════════════════════════════════════════
-    //  Допоміжні
-    // ═══════════════════════════════════════════════════════════════════════
 
     private void SetActiveNav(Button btn)
     {

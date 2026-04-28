@@ -30,8 +30,6 @@ public partial class App : System.Windows.Application
             var services = new ServiceCollection();
             services.AddInfrastructure(connectionString);
             services.AddSingleton<AuthService>();
-            
-            // Регистрируем TaskService как Singleton с фабрикой
             services.AddSingleton<TaskService>();
 
             _serviceProvider = services.BuildServiceProvider();

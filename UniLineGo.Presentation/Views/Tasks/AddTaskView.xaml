@@ -8,7 +8,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Header with back arrow -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,24" VerticalAlignment="Center">
             <Button Content="←"
                     FontSize="20"
@@ -25,7 +24,6 @@
                        VerticalAlignment="Center"/>
         </StackPanel>
 
-        <!-- Form card -->
         <Border Grid.Row="1" Background="White" CornerRadius="12"
                 Padding="32,28" VerticalAlignment="Top">
             <Border.Effect>
@@ -34,7 +32,6 @@
 
             <StackPanel>
 
-                <!-- Назва -->
                 <TextBlock Text="Назва"
                            Foreground="#6B5B7B"
                            FontSize="13"
@@ -53,7 +50,6 @@
                              FontSize="14"/>
                 </Border>
 
-                <!-- Опис -->
                 <TextBlock Text="Опис"
                            Foreground="#6B5B7B"
                            FontSize="13"
@@ -74,7 +70,6 @@
                              FontSize="14"/>
                 </Border>
 
-                <!-- Row: Дедлайн (дата + час) | Нагадування -->
                 <Grid Margin="0,0,0,28">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -82,7 +77,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Дедлайн -->
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="Дедлайн"
                                    Foreground="#6B5B7B"
@@ -96,7 +90,6 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- Custom date button + popup -->
                             <Grid Grid.Column="0">
                                 <Border Background="#F5F2F0" CornerRadius="8"
                                         BorderBrush="#E0DAE6" BorderThickness="1">
@@ -148,12 +141,10 @@
                                 </Popup>
                             </Grid>
 
-                            <!-- Time picker (hour:minute) -->
                             <Border Grid.Column="2" Background="#F5F2F0" CornerRadius="8"
                                     BorderBrush="#E0DAE6" BorderThickness="1">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                             Margin="10,0">
-                                    <!-- Година -->
                                     <TextBlock Text="&#x1F554;"
                                                FontSize="14"
                                                Foreground="#9A8A9E"
@@ -198,7 +189,6 @@
                         </Grid>
                     </StackPanel>
 
-                    <!-- Нагадування -->
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Нагадування"
                                    Foreground="#6B5B7B"
@@ -301,14 +291,12 @@
 
                 </Grid>
 
-                <!-- Error message -->
                 <TextBlock x:Name="ErrorText"
                            Foreground="#C62828"
                            FontSize="12"
                            Margin="0,0,0,12"
                            Visibility="Collapsed"/>
 
-                <!-- Buttons row -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -316,7 +304,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Зберегти -->
                     <Button Grid.Column="0"
                             Content="Зберегти"
                             Height="46"
@@ -341,7 +328,6 @@
                         </Button.Template>
                     </Button>
 
-                    <!-- Скасувати -->
                     <Button Grid.Column="2"
                             Content="Скасувати"
                             Height="46"

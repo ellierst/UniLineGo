@@ -77,7 +77,6 @@ public class TaskViewModel : INotifyPropertyChanged
         return result;
     }
 
-    // Не викликає LoadTasksAsync — список оновлює сам TasksView через RefreshList()
     public async System.Threading.Tasks.Task<(bool, string)> ToggleCompletionAsync(int id)
     {
         var result = await _taskService.ToggleCompletionAsync(id);

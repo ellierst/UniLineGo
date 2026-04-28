@@ -34,13 +34,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
         <TextBlock Grid.Row="0"
                    Text="Завдання"
                    FontSize="28" FontWeight="Bold"
                    Foreground="#C3B3D4" Margin="0,0,0,20"/>
 
-        <!-- Search + Add -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -86,7 +84,6 @@
             </Button>
         </Grid>
 
-        <!-- Filter tabs -->
         <StackPanel Grid.Row="2" Margin="0,16,0,0">
             <Grid x:Name="TabsContainer">
                 <StackPanel Orientation="Horizontal">
@@ -105,14 +102,12 @@
                             Click="TabOverdue_Click"/>
                 </StackPanel>
             </Grid>
-            <!-- Індикатор окремим рядком, керується через Margin -->
             <Border x:Name="TabIndicator"
                     Height="2" Background="#6B5B7B"
                     HorizontalAlignment="Left"
                     Width="44" Margin="14,0,0,0"/>
         </StackPanel>
 
-        <!-- Task list -->
         <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" Margin="0,8,0,0">
             <ItemsControl x:Name="TasksList">
                 <ItemsControl.ItemTemplate>
@@ -132,7 +127,6 @@
                                     <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
 
-                                <!-- Checkbox -->
                                 <CheckBox Grid.Column="0"
                                           IsChecked="{Binding IsCompleted, Mode=OneWay}"
                                           VerticalAlignment="Center"
@@ -140,7 +134,6 @@
                                           Unchecked="TaskCheck_Changed"
                                           Tag="{Binding Id}"/>
 
-                                <!-- Title -->
                                 <TextBlock Grid.Column="1"
                                            Text="{Binding Title}"
                                            FontSize="14" Foreground="#b3a3c4"
@@ -150,7 +143,6 @@
                                            VerticalAlignment="Center"
                                            Margin="0,0,16,0"/>
 
-                                <!-- Status badge — no BasedOn, standalone style -->
                                 <Border Grid.Column="2"
                                         CornerRadius="12" Padding="10,4"
                                         Margin="0,0,16,0" VerticalAlignment="Center">
@@ -190,13 +182,11 @@
                                     </TextBlock>
                                 </Border>
 
-                                <!-- Deadline -->
                                 <TextBlock Grid.Column="3"
                                            Text="{Binding DeadlineText}"
                                            FontSize="13" Foreground="#9A8A9E"
                                            VerticalAlignment="Center"/>
 
-                                <!-- Edit / Delete -->
                                 <StackPanel Grid.Column="4" Orientation="Horizontal"
                                             VerticalAlignment="Center" HorizontalAlignment="Right">
                                     <Button Content="&#x270E;" FontSize="14"
@@ -216,7 +206,6 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <!-- Footer -->
         <TextBlock Grid.Row="4" x:Name="FooterCount"
                    FontSize="12" Foreground="#9A8A9E" Margin="0,12,0,0"/>
 

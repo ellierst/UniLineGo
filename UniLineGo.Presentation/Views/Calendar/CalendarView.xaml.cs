@@ -14,7 +14,6 @@ public partial class CalendarView : UserControl
     private DateTime _currentMonth;
     private IEnumerable<TaskItem> _allTasks = [];
 
-    // Ukrainian month names
     private static readonly string[] MonthNames =
     [
         "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень",
@@ -44,12 +43,10 @@ public partial class CalendarView : UserControl
         CalendarGrid.RowDefinitions.Clear();
         CalendarGrid.ColumnDefinitions.Clear();
 
-        // 7 columns
         for (int c = 0; c < 7; c++)
             CalendarGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-        // Figure out how many rows we need (up to 6)
-        int firstDow = ((int)_currentMonth.DayOfWeek + 6) % 7; // Mon=0
+        int firstDow = ((int)_currentMonth.DayOfWeek + 6) % 7; 
         int daysInMonth = DateTime.DaysInMonth(_currentMonth.Year, _currentMonth.Month);
         int totalCells = firstDow + daysInMonth;
         int rows = (int)Math.Ceiling(totalCells / 7.0);
@@ -57,7 +54,6 @@ public partial class CalendarView : UserControl
         for (int r = 0; r < rows; r++)
             CalendarGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
-        // Fill cells
         for (int i = 0; i < rows * 7; i++)
         {
             int dayNum = i - firstDow + 1;
@@ -87,7 +83,6 @@ public partial class CalendarView : UserControl
 
         var stack = new StackPanel { Margin = new Thickness(6, 4, 6, 4) };
 
-        // Day number
         var dayLabel = new Border
         {
             Width = 26, Height = 26,
@@ -112,7 +107,6 @@ public partial class CalendarView : UserControl
         };
         stack.Children.Add(dayLabel);
 
-        // Tasks for this day
         if (inMonth)
         {
             var date = new DateTime(_currentMonth.Year, _currentMonth.Month, dayNum);
@@ -128,7 +122,6 @@ public partial class CalendarView : UserControl
                 stack.Children.Add(chip);
             }
 
-            // Hover effect
             cell.MouseEnter += (_, _) =>
             {
                 if (!isToday)
@@ -147,7 +140,6 @@ public partial class CalendarView : UserControl
 
     private static Border BuildTaskChip(TaskItem task)
     {
-        // Color by status
         var status = TaskService.GetTaskStatus(task);
         Color bg; Color fg;
         if (status == "Виконано")
@@ -166,7 +158,6 @@ public partial class CalendarView : UserControl
             fg = Color.FromRgb(230, 81, 0);
         }
 
-        // Format time
         string timeStr = task.Deadline.HasValue
             ? task.Deadline.Value.ToLocalTime().ToString("HH:mm")
             : string.Empty;
@@ -182,7 +173,6 @@ public partial class CalendarView : UserControl
 
         var inner = new StackPanel();
 
-        // Title
         inner.Children.Add(new TextBlock
         {
             Text = task.Title,
@@ -193,7 +183,6 @@ public partial class CalendarView : UserControl
             TextWrapping = TextWrapping.NoWrap
         });
 
-        // Time (if exists and non-midnight)
         if (!string.IsNullOrEmpty(timeStr) && timeStr != "00:00")
         {
             inner.Children.Add(new TextBlock
