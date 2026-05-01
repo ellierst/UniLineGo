@@ -46,7 +46,7 @@ public partial class CalendarView : UserControl
         for (int c = 0; c < 7; c++)
             CalendarGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-        int firstDow = ((int)_currentMonth.DayOfWeek + 6) % 7; 
+        int firstDow = ((int)_currentMonth.DayOfWeek + 6) % 7;
         int daysInMonth = DateTime.DaysInMonth(_currentMonth.Year, _currentMonth.Month);
         int totalCells = firstDow + daysInMonth;
         int rows = (int)Math.Ceiling(totalCells / 7.0);
@@ -138,7 +138,7 @@ public partial class CalendarView : UserControl
         return cell;
     }
 
-    private static Border BuildTaskChip(TaskItem task)
+    private Border BuildTaskChip(TaskItem task)
     {
         var status = TaskService.GetTaskStatus(task);
         Color bg; Color fg;
@@ -168,7 +168,8 @@ public partial class CalendarView : UserControl
             CornerRadius = new CornerRadius(4),
             Padding = new Thickness(5, 2, 5, 2),
             Margin = new Thickness(0, 2, 0, 0),
-            Cursor = Cursors.Hand
+            Cursor = Cursors.Hand,
+            Tag = task.Id         // <-- store task id for click
         };
 
         var inner = new StackPanel();
@@ -194,6 +195,25 @@ public partial class CalendarView : UserControl
         }
 
         chip.Child = inner;
+
+        // ── Click opens task details ─────────────────────────────────────────
+        chip.MouseLeftButtonUp += (_, e) =>
+        {
+            e.Handled = true;   // don't bubble to cell
+            if (chip.Tag is int id)
+                _mainView.ShowTaskDetail(id, "calendar");
+        };
+
+        // Subtle hover: darken chip slightly
+        chip.MouseEnter += (_, _) =>
+        {
+            chip.Opacity = 0.80;
+        };
+        chip.MouseLeave += (_, _) =>
+        {
+            chip.Opacity = 1.0;
+        };
+
         return chip;
     }
 

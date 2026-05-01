@@ -33,13 +33,13 @@ public partial class MainView : UserControl
 
         try
         {
-            SetActiveNav(NavTasks);
-            ContentArea.Content = new TasksView(_taskService, this);
+            SetActiveNav(NavHome);
+            ContentArea.Content = new HomePageView(_taskService, this);
         }
         catch (Exception ex)
         {
             MessageBox.Show(
-                $"Помилка завантаження TasksView:\n{ex.Message}\n\n{ex.InnerException?.Message}\n\n{ex.StackTrace}",
+                $"Помилка завантаження HomePageView:\n{ex.Message}\n\n{ex.InnerException?.Message}\n\n{ex.StackTrace}",
                 "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
@@ -47,7 +47,7 @@ public partial class MainView : UserControl
     private void NavHome_Click(object sender, RoutedEventArgs e)
     {
         SetActiveNav(NavHome);
-        ContentArea.Content = new HomePageView();
+        ContentArea.Content = new HomePageView(_taskService, this);
     }
 
     private void NavTasks_Click(object sender, RoutedEventArgs e)
@@ -90,27 +90,36 @@ public partial class MainView : UserControl
             (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#7D6B8E"));
     }
 
-    private static UserControl CreatePlaceholder(string title)
-    {
-        var uc = new UserControl();
-        uc.Content = new TextBlock
-        {
-            Text       = title,
-            FontSize   = 28,
-            FontWeight = FontWeights.SemiBold,
-            Foreground = new System.Windows.Media.SolidColorBrush(
-                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#C3B3D4")),
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment   = VerticalAlignment.Center
-        };
-        return uc;
-    }
+    // ── Navigation helpers called from child views ───────────────────────────
 
-    public void ShowAddTask()  => ContentArea.Content = new AddTaskView(_taskService, this);
-    public void ShowEditTask(int taskId) => ContentArea.Content = new EditTaskView(_taskService, this, taskId);
+    public void ShowAddTask()
+        => ContentArea.Content = new AddTaskView(_taskService, this);
+
+    public void ShowEditTask(int taskId)
+        => ContentArea.Content = new EditTaskView(_taskService, this, taskId);
+
     public void ShowTasksList()
     {
         SetActiveNav(NavTasks);
         ContentArea.Content = new TasksView(_taskService, this);
     }
+
+    public void ShowHome()
+    {
+        SetActiveNav(NavHome);
+        ContentArea.Content = new HomePageView(_taskService, this);
+    }
+
+    public void ShowCalendar()
+    {
+        SetActiveNav(NavCalendar);
+        ContentArea.Content = new CalendarView(_taskService, this);
+    }
+
+    /// <summary>
+    /// Opens the TaskDetailView for the given task.
+    /// <paramref name="returnTo"/> can be "home", "calendar", or "tasks".
+    /// </summary>
+    public void ShowTaskDetail(int taskId, string returnTo = "tasks")
+        => ContentArea.Content = new TaskDetailView(_taskService, this, taskId, returnTo);
 }
