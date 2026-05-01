@@ -112,10 +112,14 @@
             <ItemsControl x:Name="TasksList">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
+                        <!-- Tag stores Id; click handler ignores Button/CheckBox sources -->
                         <Border Background="Transparent"
                                 Padding="0,10"
                                 BorderBrush="#EDE8ED"
                                 BorderThickness="0,0,0,1"
+                                Cursor="Hand"
+                                Tag="{Binding Id}"
+                                MouseLeftButtonUp="TaskRow_Click"
                                 MouseEnter="TaskRow_MouseEnter"
                                 MouseLeave="TaskRow_MouseLeave">
                             <Grid>

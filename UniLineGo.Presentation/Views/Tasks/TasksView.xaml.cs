@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using UniLineGo.Application.Services;
@@ -52,10 +53,10 @@ public partial class TasksView : UserControl
         _vm.SearchText = SearchBox.Text;
     }
 
-    private void TabAll_Click(object sender, RoutedEventArgs e) => ApplyTab("Всі", TabAll);
+    private void TabAll_Click(object sender, RoutedEventArgs e)     => ApplyTab("Всі",          TabAll);
     private void TabPending_Click(object sender, RoutedEventArgs e) => ApplyTab("На виконання", TabPending);
-    private void TabDone_Click(object sender, RoutedEventArgs e) => ApplyTab("Виконано", TabDone);
-    private void TabOverdue_Click(object sender, RoutedEventArgs e) => ApplyTab("Прострочено", TabOverdue);
+    private void TabDone_Click(object sender, RoutedEventArgs e)    => ApplyTab("Виконано",     TabDone);
+    private void TabOverdue_Click(object sender, RoutedEventArgs e) => ApplyTab("Прострочено",  TabOverdue);
 
     private void ApplyTab(string filter, Button btn)
     {
@@ -75,6 +76,25 @@ public partial class TasksView : UserControl
 
     private void AddTask_Click(object sender, RoutedEventArgs e)
         => _mainView.ShowAddTask();
+
+    // ── Open task detail on row click ────────────────────────────────────────
+    private void TaskRow_Click(object sender, MouseButtonEventArgs e)
+    {
+        // Ignore clicks that originated from a Button or CheckBox (edit/delete/toggle)
+        if (e.OriginalSource is DependencyObject src)
+        {
+            var parent = src;
+            while (parent != null)
+            {
+                if (parent is ButtonBase) return;   // Button or CheckBox — skip
+                if (parent is Border b && b.Tag is int) break; // reached our row
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+        }
+
+        if (sender is Border border && border.Tag is int id)
+            _mainView.ShowTaskDetail(id, "tasks");
+    }
 
     private void EditTask_Click(object sender, RoutedEventArgs e)
     {
@@ -101,7 +121,6 @@ public partial class TasksView : UserControl
 
     private async void TaskCheck_Changed(object sender, RoutedEventArgs e)
     {
-        // Ігноруємо події під час програмного оновлення списку
         if (_isUpdating) return;
         if (sender is not CheckBox cb || cb.Tag is not int id) return;
 
