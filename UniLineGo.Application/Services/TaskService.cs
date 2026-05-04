@@ -22,26 +22,28 @@ public class TaskService
     public async Task<TaskItem?> GetTaskByIdAsync(int id)
     {
         var task = await _taskRepository.GetByIdAsync(id);
-        // повертаємо тільки якщо завдання належить поточному юзеру
         return task?.UserId == CurrentUserId ? task : null;
     }
 
     public async Task<(bool Success, string Message, int Id)> AddTaskAsync(
-        string title, string? description, DateTime? deadline, int priority)
+        string title, string? description, DateTime? deadline, int priority,
+        int? reminderMinutes = null)
     {
         if (string.IsNullOrWhiteSpace(title))
             return (false, "Назва завдання не може бути порожньою.", 0);
 
         var task = new TaskItem
         {
-            UserId      = CurrentUserId,
-            Title       = title.Trim(),
-            Description = description?.Trim(),
-            Deadline    = deadline?.ToUniversalTime(),
-            Priority    = priority,
-            IsCompleted = false,
-            CreatedAt   = DateTime.UtcNow,
-            UpdatedAt   = DateTime.UtcNow
+            UserId         = CurrentUserId,
+            Title          = title.Trim(),
+            Description    = description?.Trim(),
+            Deadline       = deadline?.ToUniversalTime(),
+            Priority       = priority,
+            IsCompleted    = false,
+            CreatedAt      = DateTime.UtcNow,
+            UpdatedAt      = DateTime.UtcNow,
+            ReminderMinutes = reminderMinutes,
+            ReminderSent   = false
         };
 
         var id = await _taskRepository.AddAsync(task);
@@ -49,7 +51,8 @@ public class TaskService
     }
 
     public async Task<(bool Success, string Message)> UpdateTaskAsync(
-        int id, string title, string? description, DateTime? deadline, int priority)
+        int id, string title, string? description, DateTime? deadline, int priority,
+        int? reminderMinutes = null)
     {
         var task = await GetTaskByIdAsync(id);
         if (task == null)
@@ -58,11 +61,19 @@ public class TaskService
         if (string.IsNullOrWhiteSpace(title))
             return (false, "Назва завдання не може бути порожньою.");
 
-        task.Title       = title.Trim();
-        task.Description = description?.Trim();
-        task.Deadline    = deadline?.ToUniversalTime();
-        task.Priority    = priority;
-        task.UpdatedAt   = DateTime.UtcNow;
+        var deadlineChanged  = task.Deadline != deadline?.ToUniversalTime();
+        var reminderChanged  = task.ReminderMinutes != reminderMinutes;
+
+        task.Title           = title.Trim();
+        task.Description     = description?.Trim();
+        task.Deadline        = deadline?.ToUniversalTime();
+        task.Priority        = priority;
+        task.UpdatedAt       = DateTime.UtcNow;
+        task.ReminderMinutes = reminderMinutes;
+
+        // Reset reminder flag so the user gets notified again after editing
+        if (deadlineChanged || reminderChanged)
+            task.ReminderSent = false;
 
         await _taskRepository.UpdateAsync(task);
         return (true, "Завдання оновлено!");
@@ -89,6 +100,18 @@ public class TaskService
 
         await _taskRepository.UpdateAsync(task);
         return (true, task.IsCompleted ? "Виконано!" : "Позначено як невиконане.");
+    }
+
+    /// <summary>
+    /// Позначити нагадування як надіслане, щоб не спамити.
+    /// </summary>
+    public async Task MarkReminderSentAsync(int id)
+    {
+        var task = await _taskRepository.GetByIdAsync(id);
+        if (task == null) return;
+        task.ReminderSent = true;
+        task.UpdatedAt    = DateTime.UtcNow;
+        await _taskRepository.UpdateAsync(task);
     }
 
     public static string GetTaskStatus(TaskItem task)

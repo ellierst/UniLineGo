@@ -55,17 +55,21 @@ public class TaskViewModel : INotifyPropertyChanged
     }
 
     public async System.Threading.Tasks.Task<(bool, string)> AddTaskAsync(
-        string title, string? description, DateTime? deadline, int priority)
+        string title, string? description, DateTime? deadline, int priority,
+        int? reminderMinutes = null)
     {
-        var result = await _taskService.AddTaskAsync(title, description, deadline, priority);
+        var result = await _taskService.AddTaskAsync(
+            title, description, deadline, priority, reminderMinutes);
         if (result.Success) await LoadTasksAsync();
         return (result.Success, result.Message);
     }
 
     public async System.Threading.Tasks.Task<(bool, string)> UpdateTaskAsync(
-        int id, string title, string? description, DateTime? deadline, int priority)
+        int id, string title, string? description, DateTime? deadline, int priority,
+        int? reminderMinutes = null)
     {
-        var result = await _taskService.UpdateTaskAsync(id, title, description, deadline, priority);
+        var result = await _taskService.UpdateTaskAsync(
+            id, title, description, deadline, priority, reminderMinutes);
         if (result.Success) await LoadTasksAsync();
         return result;
     }
@@ -91,30 +95,44 @@ public class TaskViewModel : INotifyPropertyChanged
 
 public class TaskItemDisplay
 {
-    public int Id { get; }
-    public string Title { get; }
+    public int     Id          { get; }
+    public string  Title       { get; }
     public string? Description { get; }
-    public DateTime? Deadline { get; }
-    public bool IsCompleted { get; }
-    public int Priority { get; }
+    public DateTime? Deadline  { get; }
+    public bool    IsCompleted { get; }
+    public int     Priority    { get; }
+    public int?    ReminderMinutes { get; }
 
     public string Status => TaskService.GetTaskStatus(new TaskItem
     {
         IsCompleted = IsCompleted,
-        Deadline = Deadline
+        Deadline    = Deadline
     });
 
     public string DeadlineText => Deadline.HasValue
         ? Deadline.Value.ToLocalTime().ToString("dd.MM.yyyy HH:mm")
         : "—";
 
+    public string ReminderText => ReminderMinutes switch
+    {
+        15    => "За 15 хвилин",
+        30    => "За 30 хвилин",
+        60    => "За годину",
+        1440  => "За день",
+        2880  => "За 2 дні",
+        10080 => "За тиждень",
+        null  => "Без нагадування",
+        _     => $"За {ReminderMinutes} хв"
+    };
+
     public TaskItemDisplay(TaskItem task)
     {
-        Id          = task.Id;
-        Title       = task.Title;
-        Description = task.Description;
-        Deadline    = task.Deadline;
-        IsCompleted = task.IsCompleted;
-        Priority    = task.Priority;
+        Id              = task.Id;
+        Title           = task.Title;
+        Description     = task.Description;
+        Deadline        = task.Deadline;
+        IsCompleted     = task.IsCompleted;
+        Priority        = task.Priority;
+        ReminderMinutes = task.ReminderMinutes;
     }
 }

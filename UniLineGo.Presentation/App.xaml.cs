@@ -12,6 +12,7 @@ namespace UniLineGo.Presentation;
 public partial class App : System.Windows.Application
 {
     private ServiceProvider _serviceProvider = null!;
+    private ReminderService? _reminderService;
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -31,6 +32,7 @@ public partial class App : System.Windows.Application
             services.AddInfrastructure(connectionString);
             services.AddSingleton<AuthService>();
             services.AddSingleton<TaskService>();
+            services.AddSingleton<ReminderService>();
 
             _serviceProvider = services.BuildServiceProvider();
 
@@ -40,7 +42,18 @@ public partial class App : System.Windows.Application
                 db.Database.Migrate();
             }
 
-            var shell = new ShellWindow();
+            // Wire up the reminder notification callback
+            _reminderService = _serviceProvider.GetRequiredService<ReminderService>();
+            _reminderService.SetNotificationCallback((title, body, emoji) =>
+            {
+                // Must invoke on UI thread
+                Dispatcher.InvokeAsync(() =>
+                    ReminderNotificationWindow.Show(title, body, emoji));
+            });
+
+            _reminderService.Start();
+
+            var shell       = new ShellWindow();
             var authService = _serviceProvider.GetRequiredService<AuthService>();
             shell.NavigateTo(new LoginView(authService, shell, _serviceProvider));
             shell.Show();
@@ -54,11 +67,5 @@ public partial class App : System.Windows.Application
                 MessageBoxImage.Error);
             Shutdown();
         }
-    }
-
-    protected override void OnExit(ExitEventArgs e)
-    {
-        _serviceProvider.Dispose();
-        base.OnExit(e);
     }
 }

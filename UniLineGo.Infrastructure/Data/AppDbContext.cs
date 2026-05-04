@@ -46,6 +46,10 @@ public class AppDbContext : DbContext
             entity.Property(t => t.CreatedAt).HasColumnName("created_at");
             entity.Property(t => t.UpdatedAt).HasColumnName("updated_at");
 
+            // Нові поля нагадування
+            entity.Property(t => t.ReminderMinutes).HasColumnName("reminder_minutes");
+            entity.Property(t => t.ReminderSent).HasColumnName("reminder_sent").HasDefaultValue(false);
+
             // зв'язок task → user
             entity.HasOne(t => t.User)
                   .WithMany()
