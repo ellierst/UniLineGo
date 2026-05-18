@@ -75,7 +75,7 @@
                                    Margin="0,0,0,4"/>
                         <Border Background="#F5F2F0" CornerRadius="8" Padding="14,10">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="📅 " FontSize="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="" FontSize="14" VerticalAlignment="Center"/>
                                 <TextBlock x:Name="DeadlineText"
                                            FontSize="14" Foreground="#3D3047"
                                            VerticalAlignment="Center"/>
@@ -89,10 +89,48 @@
                                    Margin="0,0,0,4"/>
                         <Border Background="#F5F2F0" CornerRadius="8" Padding="14,10">
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox x:Name="CompletedCheck"
-                                          VerticalAlignment="Center"
-                                          IsEnabled="False"
-                                          Margin="0,0,8,0"/>
+                               <CheckBox x:Name="CompletedCheck"
+                                         VerticalAlignment="Center"
+                                         Cursor="Hand"
+                                         Click="CompletedCheck_Click"
+                                         Margin="0,0,10,0">
+                                    <CheckBox.Style>
+                                        <Style TargetType="CheckBox">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="CheckBox">
+                                                        <Border x:Name="Box"
+                                                                Width="20" Height="20"
+                                                                CornerRadius="5"
+                                                                BorderThickness="2"
+                                                                BorderBrush="#C3B3D4"
+                                                                Background="White">
+                                                            <TextBlock x:Name="Check"
+                                                                    Text="✓"
+                                                                    FontSize="12"
+                                                                    FontWeight="Bold"
+                                                                    Foreground="White"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    Visibility="Collapsed"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter TargetName="Box" Property="Background" Value="#6B5B7B"/>
+                                                                <Setter TargetName="Box" Property="BorderBrush" Value="#6B5B7B"/>
+                                                                <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="Box" Property="BorderBrush" Value="#6B5B7B"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </CheckBox.Style>
+                                </CheckBox>
+
                                 <TextBlock x:Name="CompletedText"
                                            FontSize="14" Foreground="#3D3047"
                                            VerticalAlignment="Center"/>
@@ -109,19 +147,19 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Content="✏ Редагувати"
+                    <Button Grid.Column="0" Content="Редагувати"
                             Height="46" FontSize="14" FontWeight="SemiBold"
                             Cursor="Hand" Click="EditButton_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border x:Name="Bg" Background="#C3B3D4" CornerRadius="8">
+                                <Border x:Name="Bg" Background="#a78dc4" CornerRadius="8">
                                     <ContentPresenter HorizontalAlignment="Center"
                                                       VerticalAlignment="Center"
                                                       TextElement.Foreground="White"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="Bg" Property="Background" Value="#b3a3c4"/>
+                                        <Setter TargetName="Bg" Property="Background" Value="#8e75a9"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -133,14 +171,14 @@
                             Cursor="Hand" Click="DeleteButton_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border x:Name="Bg" Background="#FAEECD" CornerRadius="8">
+                                <Border x:Name="Bg" Background="#fde6a5" CornerRadius="8">
                                     <ContentPresenter HorizontalAlignment="Center"
                                                       VerticalAlignment="Center"
-                                                      TextElement.Foreground="#C3B3D4"/>
+                                                      TextElement.Foreground="#a78dc4"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="Bg" Property="Background" Value="#e3d7b8"/>
+                                        <Setter TargetName="Bg" Property="Background" Value="#f4d785"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

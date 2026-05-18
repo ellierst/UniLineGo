@@ -12,7 +12,6 @@ public partial class TasksView : UserControl
 {
     private readonly TaskViewModel _vm;
     private readonly MainView _mainView;
-    private bool _isUpdating = false;
 
     public TasksView(TaskService taskService, MainView mainView)
     {
@@ -28,21 +27,14 @@ public partial class TasksView : UserControl
 
     private async System.Threading.Tasks.Task LoadAsync()
     {
-        _isUpdating = true;
         await _vm.LoadTasksAsync();
         RefreshList();
-        _isUpdating = false;
     }
 
     private void RefreshList()
     {
-        _isUpdating = true;
         TasksList.ItemsSource = null;
         TasksList.ItemsSource = _vm.Tasks;
-        _isUpdating = false;
-
-        var count = _vm.Tasks.Count;
-        FooterCount.Text = $"Показано {count} із {count} завдань";
     }
 
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -56,7 +48,7 @@ public partial class TasksView : UserControl
     private void TabAll_Click(object sender, RoutedEventArgs e)     => ApplyTab("Всі",          TabAll);
     private void TabPending_Click(object sender, RoutedEventArgs e) => ApplyTab("На виконання", TabPending);
     private void TabDone_Click(object sender, RoutedEventArgs e)    => ApplyTab("Виконано",     TabDone);
-    private void TabOverdue_Click(object sender, RoutedEventArgs e) => ApplyTab("Прострочено",  TabOverdue);
+    private void TabOverdue_Click(object sender, RoutedEventArgs e) => ApplyTab("Протерміновано",  TabOverdue);
 
     private void ApplyTab(string filter, Button btn)
     {
@@ -117,17 +109,6 @@ public partial class TasksView : UserControl
             MessageBox.Show(message, "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
         else
             RefreshList();
-    }
-
-    private async void TaskCheck_Changed(object sender, RoutedEventArgs e)
-    {
-        if (_isUpdating) return;
-        if (sender is not CheckBox cb || cb.Tag is not int id) return;
-
-        _isUpdating = true;
-        await _vm.ToggleCompletionAsync(id);
-        RefreshList();
-        _isUpdating = false;
     }
 
     private void MoveIndicator(Button btn)

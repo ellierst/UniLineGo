@@ -119,7 +119,7 @@ public class TaskService
         if (task.IsCompleted)
             return "Виконано";
         if (task.Deadline.HasValue && task.Deadline.Value < DateTime.UtcNow)
-            return "Прострочено";
+            return "Протерміновано";
         return "На виконання";
     }
 }

@@ -41,7 +41,7 @@ public class TaskViewModel : INotifyPropertyChanged
             {
                 "На виконання" => status == "На виконання",
                 "Виконано"     => status == "Виконано",
-                "Прострочено"  => status == "Прострочено",
+                "Протерміновано"  => status == "Протерміновано",
                 _              => true
             };
             bool matchSearch = string.IsNullOrEmpty(SearchText) ||

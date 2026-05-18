@@ -37,7 +37,7 @@
         <TextBlock Grid.Row="0"
                    Text="Завдання"
                    FontSize="28" FontWeight="Bold"
-                   Foreground="#C3B3D4" Margin="0,0,0,20"/>
+                   Foreground="#a78dc4" Margin="0,0,0,20"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -50,7 +50,7 @@
                 <Grid>
                     <TextBlock x:Name="SearchPlaceholder"
                                Text="Пошук завдань..."
-                               Foreground="#C3B3D4" FontSize="13"
+                               Foreground="#a78dc4" FontSize="13"
                                Margin="12,0,0,0" VerticalAlignment="Center"/>
                     <TextBox x:Name="SearchBox"
                              Background="Transparent" BorderThickness="0"
@@ -68,7 +68,7 @@
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Bg"
-                                Background="#C3B3D4" CornerRadius="8"
+                                Background="#a78dc4" CornerRadius="8"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
@@ -76,7 +76,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bg" Property="Background" Value="#b3a3c4"/>
+                                <Setter TargetName="Bg" Property="Background" Value="#8e75a9"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -97,7 +97,7 @@
                     <Button x:Name="TabDone" Content="Виконано"
                             Style="{StaticResource FilterTabStyle}"
                             Click="TabDone_Click"/>
-                    <Button x:Name="TabOverdue" Content="Прострочено"
+                    <Button x:Name="TabOverdue" Content="Протерміновано"
                             Style="{StaticResource FilterTabStyle}"
                             Click="TabOverdue_Click"/>
                 </StackPanel>
@@ -124,30 +124,22 @@
                                 MouseLeave="TaskRow_MouseLeave">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="32"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
 
-                                <CheckBox Grid.Column="0"
-                                          IsChecked="{Binding IsCompleted, Mode=OneWay}"
-                                          VerticalAlignment="Center"
-                                          Checked="TaskCheck_Changed"
-                                          Unchecked="TaskCheck_Changed"
-                                          Tag="{Binding Id}"/>
-
-                                <TextBlock Grid.Column="1"
+                                <TextBlock Grid.Column="0"
                                            Text="{Binding Title}"
-                                           FontSize="14" Foreground="#b3a3c4"
+                                           FontSize="14" Foreground="#8e75a9"
                                            FontWeight="Medium"
                                            TextWrapping="NoWrap"
                                            TextTrimming="CharacterEllipsis"
                                            VerticalAlignment="Center"
                                            Margin="0,0,16,0"/>
 
-                                <Border Grid.Column="2"
+                                <Border Grid.Column="1"
                                         CornerRadius="12" Padding="10,4"
                                         Margin="0,0,16,0" VerticalAlignment="Center">
                                     <Border.Style>
@@ -160,7 +152,7 @@
                                                 <DataTrigger Binding="{Binding Status}" Value="На виконання">
                                                     <Setter Property="Background" Value="#FFF3E0"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Status}" Value="Прострочено">
+                                                <DataTrigger Binding="{Binding Status}" Value="Протерміновано">
                                                     <Setter Property="Background" Value="#FDECEA"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -177,7 +169,7 @@
                                                     <DataTrigger Binding="{Binding Status}" Value="На виконання">
                                                         <Setter Property="Foreground" Value="#E65100"/>
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Status}" Value="Прострочено">
+                                                    <DataTrigger Binding="{Binding Status}" Value="Протерміновано">
                                                         <Setter Property="Foreground" Value="#C62828"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -186,20 +178,20 @@
                                     </TextBlock>
                                 </Border>
 
-                                <TextBlock Grid.Column="3"
+                                <TextBlock Grid.Column="2"
                                            Text="{Binding DeadlineText}"
                                            FontSize="13" Foreground="#9A8A9E"
                                            VerticalAlignment="Center"/>
 
-                                <StackPanel Grid.Column="4" Orientation="Horizontal"
+                                <StackPanel Grid.Column="3" Orientation="Horizontal"
                                             VerticalAlignment="Center" HorizontalAlignment="Right">
                                     <Button Content="&#x270E;" FontSize="14"
                                             Background="Transparent" BorderThickness="0"
-                                            Cursor="Hand" Foreground="#b3a3c4" Padding="6,4"
+                                            Cursor="Hand" Foreground="#8e75a9" Padding="6,4"
                                             Click="EditTask_Click" Tag="{Binding Id}"/>
                                     <Button Content="&#x2715;" FontSize="13"
                                             Background="Transparent" BorderThickness="0"
-                                            Cursor="Hand" Foreground="#b3a3c4" Padding="6,4"
+                                            Cursor="Hand" Foreground="#8e75a9" Padding="6,4"
                                             Click="DeleteTask_Click" Tag="{Binding Id}"/>
                                 </StackPanel>
 

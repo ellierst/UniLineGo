@@ -55,7 +55,7 @@
             </Grid.RowDefinitions>
 
             <!-- Accent stripe -->
-            <Border Grid.Row="0" Background="#C3B3D4" CornerRadius="14,14,0,0"/>
+            <Border Grid.Row="0" Background="#a78dc4" CornerRadius="14,14,0,0"/>
 
             <!-- Content -->
             <Grid Grid.Row="1" Margin="16,14,16,16">

@@ -52,7 +52,7 @@ public partial class TaskDetailView : UserControl
         (Color bg, Color fg) = status switch
         {
             "Виконано"    => (Color.FromRgb(232, 245, 233), Color.FromRgb(56, 142, 60)),
-            "Прострочено" => (Color.FromRgb(253, 236, 234), Color.FromRgb(198, 40, 40)),
+            "Протерміновано" => (Color.FromRgb(253, 236, 234), Color.FromRgb(198, 40, 40)),
             _             => (Color.FromRgb(255, 243, 224), Color.FromRgb(230, 81, 0))
         };
         StatusBadge.Background = new SolidColorBrush(bg);
@@ -78,6 +78,23 @@ public partial class TaskDetailView : UserControl
             MessageBox.Show(message, "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
         else
             GoBack();
+    }
+
+    private async void CompletedCheck_Click(object sender, RoutedEventArgs e)
+    {
+        var (success, message) = await _taskService.ToggleCompletionAsync(_taskId);
+        if (!success)
+        {
+            MessageBox.Show(message, "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            // Повернути стан чекбокса у разі помилки
+            CompletedCheck.IsChecked = !CompletedCheck.IsChecked;
+            return;
+        }
+        // Оновити текст поруч із чекбоксом
+        var isNowCompleted = CompletedCheck.IsChecked == true;
+        CompletedText.Text = isNowCompleted ? "Виконано" : "Не виконано";
+        // Перезавантажити деталі, щоб оновився статус-бейдж
+        await LoadAsync();
     }
 
     private void BackButton_Click(object sender, RoutedEventArgs e) => GoBack();

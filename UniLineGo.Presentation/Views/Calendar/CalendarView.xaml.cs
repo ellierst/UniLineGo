@@ -147,7 +147,7 @@ public partial class CalendarView : UserControl
             bg = Color.FromRgb(232, 245, 233);
             fg = Color.FromRgb(56, 142, 60);
         }
-        else if (status == "Прострочено")
+        else if (status == "Протерміновано")
         {
             bg = Color.FromRgb(253, 236, 234);
             fg = Color.FromRgb(198, 40, 40);

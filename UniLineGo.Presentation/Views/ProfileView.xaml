@@ -14,7 +14,7 @@
                 Padding="48,44" Margin="0,40">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="24" ShadowDepth="0"
-                                  Opacity="0.15" Color="#C3B3D4"/>
+                                  Opacity="0.15" Color="#a78dc4"/>
             </Border.Effect>
 
             <StackPanel>
@@ -23,11 +23,11 @@
                            FontSize="28"
                            FontWeight="Bold"
                            HorizontalAlignment="Center"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            Margin="0,0,0,32"/>
 
                 <TextBlock Text="Ім'я користувача"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            FontWeight="SemiBold"
                            Margin="0,0,0,6"/>
 
@@ -42,7 +42,7 @@
                          BorderThickness="1.5"/>
 
                 <TextBlock Text="Email"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            FontWeight="SemiBold"
                            Margin="0,14,0,6"/>
 
@@ -57,7 +57,7 @@
                          BorderThickness="1.5"/>
 
                 <TextBlock Text="Новий пароль"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            FontWeight="SemiBold"
                            Margin="0,14,0,6"/>
 
@@ -66,13 +66,13 @@
                              Padding="14,10"
                              Background="#EDE8ED"
                              BorderBrush="#DACADD"
-                             Foreground="#C3B3D4"
+                             Foreground="#a78dc4"
                              FontFamily="Segoe UI"
                              FontSize="14"
                              BorderThickness="1.5"/>
 
                 <TextBlock Text="Підтвердіть новий пароль"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            FontWeight="SemiBold"
                            Margin="0,14,0,6"/>
 
@@ -81,7 +81,7 @@
                              Padding="14,10"
                              Background="#EDE8ED"
                              BorderBrush="#DACADD"
-                             Foreground="#C3B3D4"
+                             Foreground="#a78dc4"
                              FontFamily="Segoe UI"
                              FontSize="14"
                              BorderThickness="1.5"/>
@@ -90,7 +90,7 @@
                            FontSize="12"
                            Margin="0,10,0,0"
                            Visibility="Collapsed"
-                           Foreground="#C3B3D4"/>
+                           Foreground="#a78dc4"/>
 
                 <Button Content="Зберегти зміни"
                         Height="46"
@@ -106,7 +106,7 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="Bg"
-                                                Background="#C3B3D4"
+                                                Background="#a78dc4"
                                                 CornerRadius="8">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
@@ -115,7 +115,7 @@
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="Bg" Property="Background" Value="#b3a3c4"/>
+                                                <Setter TargetName="Bg" Property="Background" Value="#8e75a9"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -140,16 +140,16 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="Bg"
-                                                Background="#FAEECD"
+                                                Background="#fde6a5"
                                                 CornerRadius="8">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                TextElement.Foreground="#C3B3D4"/>
+                                                TextElement.Foreground="#a78dc4"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="Bg" Property="Background" Value="#e3d7b8"/>
+                                                <Setter TargetName="Bg" Property="Background" Value="#f4d785"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>

@@ -14,7 +14,7 @@
                 Padding="48,44" Margin="0,40">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="24" ShadowDepth="0"
-                                  Opacity="0.15" Color="#C3B3D4"/>
+                                  Opacity="0.15" Color="#a78dc4"/>
             </Border.Effect>
 
             <StackPanel>
@@ -23,17 +23,17 @@
                            FontSize="34"
                            FontWeight="Bold"
                            HorizontalAlignment="Center"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            Margin="0,0,0,6"/>
 
                 <TextBlock Text="Створіть новий акаунт"
                            FontSize="14"
                            HorizontalAlignment="Center"
-                           Foreground="#DACADD"
+                           Foreground="#ab79b4"
                            Margin="0,0,0,36"/>
 
                 <TextBlock Text="Ім'я користувача"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            FontWeight="SemiBold"
                            Margin="0,0,0,6"/>
 
@@ -48,7 +48,7 @@
                          BorderThickness="1.5"/>
 
                 <TextBlock Text="Email"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            FontWeight="SemiBold"
                            Margin="0,14,0,6"/>
 
@@ -63,7 +63,7 @@
                          BorderThickness="1.5"/>
 
                 <TextBlock Text="Пароль"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            FontWeight="SemiBold"
                            Margin="0,14,0,6"/>
 
@@ -72,13 +72,13 @@
                              Padding="14,10"
                              Background="#EDE8ED"
                              BorderBrush="#DACADD"
-                             Foreground="#C3B3D4"
+                             Foreground="#a78dc4"
                              FontFamily="Segoe UI"
                              FontSize="14"
                              BorderThickness="1.5"/>
 
                 <TextBlock Text="Підтвердіть пароль"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            FontWeight="SemiBold"
                            Margin="0,14,0,6"/>
 
@@ -87,13 +87,13 @@
                              Padding="14,10"
                              Background="#EDE8ED"
                              BorderBrush="#DACADD"
-                             Foreground="#C3B3D4"
+                             Foreground="#a78dc4"
                              FontFamily="Segoe UI"
                              FontSize="14"
                              BorderThickness="1.5"/>
 
                 <TextBlock x:Name="ErrorText"
-                           Foreground="#C3B3D4"
+                           Foreground="#a78dc4"
                            FontSize="12"
                            Margin="0,10,0,0"
                            Visibility="Collapsed"/>
@@ -112,7 +112,7 @@
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="Bg"
-                                                Background="#C3B3D4"
+                                                Background="#a78dc4"
                                                 CornerRadius="8">
                                             <ContentPresenter
                                                 HorizontalAlignment="Center"
@@ -121,7 +121,7 @@
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="Bg" Property="Background" Value="#b3a3c4"/>
+                                                <Setter TargetName="Bg" Property="Background" Value="#8e75a9"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -136,10 +136,10 @@
                             Margin="0,20,0,0">
 
                     <TextBlock Text="Вже є акаунт? "
-                               Foreground="#DACADD"/>
+                               Foreground="#ab79b4"/>
 
                     <TextBlock Text="Увійти"
-                               Foreground="#C3B3D4"
+                               Foreground="#a78dc4"
                                Cursor="Hand"
                                TextDecorations="Underline"
                                MouseLeftButtonUp="GoToLogin_Click"/>
